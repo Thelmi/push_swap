@@ -11,11 +11,14 @@
 /* ************************************************************************** */
 
 
-#ifndef PUSHSWAP_H
-# define PUSHSWAP_H
+#ifndef list_H
+# define list_H
 
-# include "./libft/libft.h"
+// # include "./libft/libft.h"
 
+# include <unistd.h>
+# include <stdlib.h>
+# include <limits.h>
 typedef struct s_list
 {
 	int				data;
