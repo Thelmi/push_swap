@@ -1,7 +1,8 @@
 
-#include "list.h"
 
-size_t	ft_strlen(const char *s)
+#include <stdio.h>
+#include "list.h"
+static size_t ft_strlen(const char *s)
 {
 	size_t	i;
 
@@ -10,8 +11,7 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
-
-int	ft_atoi(const char *str)
+static int 	ft_atoi(const char *str)
 {
 	int				i;
 	int				sign;
@@ -39,7 +39,7 @@ int	ft_atoi(const char *str)
 	}
 	return (result * sign);
 }
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
 
@@ -54,7 +54,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	dst[i] = '\0';
 	return (ft_strlen(src));
 }
-char	*ft_strdup(const char *s1)
+static char	*ft_strdup(const char *s1)
 {
 	int		i;
 	char	*s2;
@@ -64,7 +64,7 @@ char	*ft_strdup(const char *s1)
 	ft_strlcpy(s2, s1, i);
 	return (s2);
 }
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+static char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
 
@@ -148,7 +148,7 @@ static char	**getwords(char **arr, char *s, char c, int word)
 	return (arr);
 }
 
-char	**ft_split(char const *s, char c)
+static char	**ft_split(char const *s, char c)
 {
 	char	**arr;
 	int		word;
@@ -161,7 +161,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (getwords(arr, (char *)s, c, word));
 }
-int	*ft_strchr(const char *s, int c)
+static int	ft_strchr(const char *s, int c)
 {
 	int	i;
 
@@ -175,13 +175,13 @@ int	*ft_strchr(const char *s, int c)
 	return 0;
 }
 
-int is_integer(char *str)
+static int is_integer(char *str)
 {
-	 if (ft_strlen(str) > 2 && ft_atoi(str) == 0 || ft_atoi(str) == -1)
+	 if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))
 	 			return (0);
 		return (1);
 }
-int isnot_term(char *str)
+static int isnot_term(char *str)
 {
 	int i = 0;
 	while (str[i])
@@ -193,19 +193,19 @@ int isnot_term(char *str)
 	return (1);
 }
 
-int t_defence(char *str)
+static int t_defence(char *str)
 {
 	int i = 0;
 	int flag = 0;
 
-	if (ft_strlen(str) > 2 && ft_atoi(str) == 0 || ft_atoi(str) == -1)
+	if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))
 		return 0;
 	while(str[i] == ' ')
 		i++;	
 	while (str[i])
 	{
 		if ((str[i] >= '0' && str[i] <= '9') ||
-		 (str[i] == '-' || str[i] == '+') && str[i + 1] >= '0' && str[i + 1] <= '9')
+		 ((str[i] == '-' || str[i] == '+') && (str[i + 1] >= '0' && str[i + 1] <= '9')))
 			flag = 1;
 		 else if (flag && str[i] == ' ')
 			flag = 1;
@@ -215,58 +215,327 @@ int t_defence(char *str)
 	}
 		return (flag);
 }
-
-int	main(int ac, char **av)
+ Node* createNode(int value)
 {
-	int i;
-
-	i = 1;
-	char **splitted;
-	t_list *node;
-	while (i < ac)
+	Node* newnode = malloc(sizeof(Node));
+	if(!newnode)
 	{
-		if (t_defence(av[1]) && isnot_term(av[1]))
-		{
-			if (ft_strchr(av[1], ' '))
-			{
-				splitted = ft_split(av[1], ' ');
-				while (splitted[i])
-				{
-					if (is_integer(av[1]) && is_double(av[1]))
-					{
-						node = malloc(sizeof(t_list));
-						if (!node)
-								return ;
-						node -> next = NULL;
-						while (node != NULL)
-						{
-							 -> data = ft_atoi(splitted[i]);
-							point = point -> next;
-						}	
-						node -> data = ft_atoi(splitted[i]);
-					}
-					else
-						write(2, "Error\n", 6);
-				}
-			}
-				if (is_integer(av[1]))
-				{
-					node = malloc(sizeof(t_list));
-					if (!node)
-							return ;
-					node -> data = ft_atoi(av[1]);
-				}
-				else 
-					write(2, "Error\n", 6);
-		}
-		else
-			write(2, "Error\n", 6);
-		i++;
+		return NULL;
+	}
+	newnode -> data = value;
+	newnode -> next = NULL;
+	return newnode;
+}
+void printlist(Node* list)
+{
+	Node *tmp = list;
+	while (tmp != NULL)
+	{
+		printf("%d\n", tmp -> data);
+		tmp = tmp -> next;
 	}
 }
+static void freelist(Node* list)
+{
+	Node *tmp = list;
+	while(tmp != NULL)
+	{
+		tmp = list -> next;
+		free(list);
+		list = tmp;
+	}
+}
+static void isdouble(Node* list)
+{
+	Node *tmp = list -> next;
+	Node *store = list;
+	while (list != NULL)
+	{
+		while (tmp != NULL)
+		{
+			if (list -> data == tmp -> data)
+			{
+				printf("error\n");
+			    freelist(store);
+			    exit(1);
+			}	
+			tmp = tmp -> next;
+		}
+		list = list ->next;
+		if (list)
+			tmp = list ->next;
+	}
+}
+// int main(int ac ,char **av)
+// {
+// 	int i = 1;
+// 	char **splitted;
+// 	Node *head = NULL;
+// 	Node *tmp;
+// 	Node *nextnode;
+
+// 	int j = 0;
+// 	while(i < ac)
+// 	{
+// 		if (t_defence(av[i]) && isnot_term(av[i]))
+// 		{
+// 			if (ft_strchr(av[i], ' '))
+// 			{
+// 				splitted = ft_split(av[i], ' ');
+// 				if(!head)
+// 				{
+// 			    	head = createNode(ft_atoi(splitted[0]));
+// 					tmp = head;
+// 					j = 1;
+// 				}
+// 				while (splitted[j])
+// 				{
+// 					nextnode = createNode(ft_atoi(splitted[j]));
+// 					tmp -> next = nextnode;
+// 					tmp = tmp -> next;
+// 					j++;
+// 				}
+// 				j = 0;
+// 				while (splitted[j])
+// 				{
+// 					free(splitted[j]);
+// 					j++;
+// 				}
+// 				free(splitted);
+// 				j = 0;
+// 			}
+// 			else 
+// 			{
+// 				if(!head)
+// 				{
+// 					head = createNode(ft_atoi(av[i]));
+// 					tmp = head;
+// 				}
+// 				else 
+// 				{
+// 					nextnode = createNode(atoi(av[i]));
+// 					tmp -> next = nextnode;
+// 					tmp = nextnode;
+// 				}
+// 			}
+// 		}
+// 		else 
+// 		{
+// 			printf("error\n");
+// 			freelist(head);
+// 			exit(1);
+// 		}
+// 		i++;
+// 	}
+// 	isdouble(head);
+// 	printlist(head);
+// 	freelist(head);
+// }
+Node *is_valid(int ac, char **av)
+{
+	int i = 1;
+	char **splitted;
+	Node *head = NULL;
+	Node *tmp;
+	Node *nextnode;
+
+	int j = 0;
+	while(i < ac)
+	{
+		if (t_defence(av[i]) && isnot_term(av[i]))
+		{
+			if (ft_strchr(av[i], ' '))
+			{
+				splitted = ft_split(av[i], ' ');
+				if(!head)
+				{
+			    	head = createNode(ft_atoi(splitted[0]));
+					tmp = head;
+					j = 1;
+				}
+				while (splitted[j])
+				{
+					nextnode = createNode(ft_atoi(splitted[j]));
+					tmp -> next = nextnode;
+					tmp = tmp -> next;
+					j++;
+				}
+				j = 0;
+				while (splitted[j])
+				{
+					free(splitted[j]);
+					j++;
+				}
+				free(splitted);
+				j = 0;
+			}
+			else 
+			{
+				if(!head)
+				{
+					head = createNode(ft_atoi(av[i]));
+					tmp = head;
+				}
+				else 
+				{
+					nextnode = createNode(atoi(av[i]));
+					tmp -> next = nextnode;
+					tmp = nextnode;
+				}
+			}
+		}
+		else 
+		{
+			printf("error\n");
+			freelist(head);
+			exit(1);
+		}
+		i++;
+	}
+	isdouble(head);
+	// printlist(head);
+	return head;
+	// freelist(head);
+}
+// int main(int ac, char **av)
+// {
+// 	is_valid(ac, av);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// int	main(int ac, char **av)
+// {
+// 	int i = 1;
+// 	char **splitted;
+	
+// 	while (i < ac)
+// 	{
+// 		if (t_defence(av[1]) && isnot_term(av[1]))
+// 		{
+// 			if (ft_strchr(av[1], ' '))
+// 			{
+// 				splitted = ft_split(av[1], ' ');
+// 				while (splitted[i])
+// 				{
+// 					if (is_integer(av[1]) && is_double(av[1]))
+// 					{
+// 						while ()
+// 						{
+
+// 						}
+// 					}
+// 					else
+// 						write(2, "Error\n", 6);
+// 				}
+// 			}
+// 				if (is_integer(av[1]))
+// 				{
+
+// 				}
+// 				else 
+// 					write(2, "Error\n", 6);
+// 		}
+// 		else
+// 			write(2, "Error\n", 6);
+// 		i++;
+// 	}
+// }
 
 // Notes:
-		// examples:
+// 		examples:
 // "1" convert 
 // "+1"
 // "-1" convert 

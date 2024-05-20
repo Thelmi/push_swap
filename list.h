@@ -19,10 +19,27 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-typedef struct s_list
-{
-	int				data;
-	struct s_list	*next;
-}					t_list;
 
+typedef struct list
+{
+
+    int data;
+    struct list *next;
+
+}              Node;
+
+Node    *is_valid(int ac, char **av);
+Node    *createNode(int value);
+Node    *lastnode(Node *list);
+Node    *add_front(Node** node,int value);
+Node    *add_back(Node *list, int val);
+void    printlist(Node *list);
+void    swap(Node *list);
+void    double_swap(Node *listA, Node *listB);
+void    push(Node **listA, Node **listB);
+void    rotate(Node *list);
+void    double_rotate(Node *listA, Node *listB);
+void    reverse_rotate(Node **list);
+void    double_reverse_rotate(Node **listA, Node **listB);
+ 
 #endif
