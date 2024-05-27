@@ -62,6 +62,7 @@ int target(Node *stackA, Node *stackB)
 {
     Node *tmpA = stackA;
     Node *tmpB = stackB;
+    int  cost;
     int  target;
     while (tmpA != NULL)
     {
@@ -93,13 +94,34 @@ int main(int ac, char **av)
 // target = stacka > stackb && the least difference 
 // if value in stack_a is the samllest the target above the largest value
                      
+           rotate                                      rr
+       position / 2 <= size stackb /2        position > size stackb / 2            cost of sorting stack b = size of stackb + 1 - target position
 
-       
-    //     2            11
-    //     3             7
+                    
+    //      2            11
+    //     3
+           6
+           7             7
     //     4             5  
-    //     5             4 
-    //     7              3
+    //     5             3 
+    //     7             2 
     //    11            
                                          
-               
+     
+
+if head -> data = the one we want to push 
+cost stack a = 0 
+                                                  reverse_rotate = positon of one u want to raise > size stackb / 2 
+                                                  rotate  = positon of one u want to raise < size stackb / 2
+else if (reverse rotate)
+
+this is the formula (for stacka cost of tranfer to header =  size of stacka + 1 - the one to raise position)
+
+else if(rotate)
+
+this is the formula (for stacka cost of tranfer to header = the one to raise position - 1)
+
+
+cost = for stacka cost of tranfer to header + cost of sorting stack b;
+
+the smallest cost is the chosen one to do.

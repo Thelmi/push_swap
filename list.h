@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:52:55 by thelmy            #+#    #+#             */
-/*   Updated: 2024/04/21 19:37:46 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/05/25 15:41:05 by mrhelmy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 
 typedef struct list
 {
-
+    int bmax;
+    int bmin;
+    int first;
+    int last;
     int data;
     struct list *next;
-
 }              Node;
 
 Node    *is_valid(int ac, char **av);
