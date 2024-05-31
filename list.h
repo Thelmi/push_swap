@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:52:55 by thelmy            #+#    #+#             */
-/*   Updated: 2024/05/25 15:41:05 by mrhelmy          ###   ########.fr       */
+/*   Updated: 2024/05/30 15:35:20 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,16 @@
 
 typedef struct list
 {
+    int positionA;
+    int positionB;
     int bmax;
     int bmin;
     int first;
     int last;
     int data;
+    int stackA_size;
+    int stackB_size;
+    int target;
     struct list *next;
 }              Node;
 

@@ -87,15 +87,15 @@ Node* createNode(int value)
     newnode -> next = NULL;
     return newnode;
 }
-void printlist(Node* head)
-{
-    Node* tmp = head;
-    while (tmp != NULL)
-    {
-        printf("%d\n",tmp -> data);
-        tmp = tmp -> next;
-    }
-}
+// void printlist(Node* head)
+// {
+//     Node* tmp = head;
+//     while (tmp != NULL)
+//     {
+//         printf("%d\n",tmp -> data);
+//         tmp = tmp -> next;
+//     }
+// }
 void freelist(Node* list)
 {
     Node *tmp = list;

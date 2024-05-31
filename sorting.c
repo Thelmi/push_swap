@@ -94,14 +94,14 @@ int main(int ac, char **av)
 // target = stacka > stackb && the least difference 
 // if value in stack_a is the samllest the target above the largest value
                      
-           rotate                                      rr
-       position / 2 <= size stackb /2        position > size stackb / 2            cost of sorting stack b = size of stackb + 1 - target position
+    //        rotate                                      rr
+    //    position / 2 <= size stackb /2        position > size stackb / 2            cost of sorting stack b = size of stackb + 1 - target position
 
                     
     //      2            11
     //     3
-           6
-           7             7
+        //    6
+        //    7             7
     //     4             5  
     //     5             3 
     //     7             2 
@@ -109,19 +109,19 @@ int main(int ac, char **av)
                                          
      
 
-if head -> data = the one we want to push 
-cost stack a = 0 
-                                                  reverse_rotate = positon of one u want to raise > size stackb / 2 
-                                                  rotate  = positon of one u want to raise < size stackb / 2
-else if (reverse rotate)
+// if head -> data = the one we want to push 
+// cost stack a = 0 
+//                                                   reverse_rotate = positon of one u want to raise > size stackb / 2 
+//                                                   rotate  = positon of one u want to raise < size stackb / 2
+// else if (reverse rotate)
 
-this is the formula (for stacka cost of tranfer to header =  size of stacka + 1 - the one to raise position)
+// this is the formula (for stacka cost of tranfer to header =  size of stacka + 1 - the one to raise position)
 
-else if(rotate)
+// else if(rotate)
 
-this is the formula (for stacka cost of tranfer to header = the one to raise position - 1)
+// this is the formula (for stacka cost of tranfer to header = the one to raise position - 1)
 
 
-cost = for stacka cost of tranfer to header + cost of sorting stack b;
+// cost = for stacka cost of tranfer to header + cost of sorting stack b;
 
-the smallest cost is the chosen one to do.
+// the smallest cost is the chosen one to do.
