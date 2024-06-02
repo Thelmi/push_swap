@@ -158,7 +158,7 @@ void target(Node *stackA, Node *stackB)
     while (tmpA != NULL)
     {
         positionA++;
-        positionB++;
+        positionB = 1;
         tmpB = stackB;
         while (tmpB != NULL)
         {
@@ -168,51 +168,55 @@ void target(Node *stackA, Node *stackB)
             // && (tmpA -> data > tmpB -> bmax) || (tmpA -> data < tmpB -> bmin)
             // ||  (tmpA -> data > tmpB -> first && tmpA -> data < tmpB-> last))
             if ((tmpB->next != NULL) 
-            && ((tmpA->data < tmpB->data && tmpA->data > tmpB->next->data) 
-            || (tmpB->data == tmpB->bmax && tmpA->data > tmpB->bmax)
-            || (tmpA->data < tmpB->bmin) 
-            || (tmpA->data > tmpB->first && tmpA->data < tmpB->last)))
+            && (tmpA->data < tmpB->data && tmpA->data > tmpB->next->data) 
+            || (tmpB->data == tmpB->bmax) && (tmpA->data > tmpB->bmax
+            || tmpA->data < tmpB->bmin) 
+            || (tmpA->data > tmpB->first && tmpA->data < tmpB->last))
 
             {
                 if (positionA <= (tmpA ->stackA_size + 1) / 2)
                 {
                     if (positionB <= (tmpB ->stackB_size + 1) / 2)
                         {
-                            if (positionA > positionB)
+                            if (positionA >= positionB)
                             {
                                 cost = positionA;
-                                // printf("1) cost: %d = positionA %d\n",cost, positionA);
+                                printf("1) cost: %d = positionA %d\n",cost, positionA);
                             }
                             else
                             {
                                 cost = positionB + 1;
-                                //  printf("2) cost: %d = positionB: %d + 1\n",cost, positionB);
+                                 printf("2) cost: %d = positionB: %d + 1\n",cost, positionB);
                             }
                         } //  might need to subtract 1 mov
                     else
                         {
+                            if (positionA == 1 && positionB == 2 && stackB ->stackB_size == 2)
+                                    positionB--;
                             cost = positionA + (tmpB ->stackB_size - positionB);
-                            // printf("3) cost: %d = postionA: %d +(tmpB ->stackB_size: %d - postionB: %d\n)",cost, positionA,tmpB ->stackB_size, positionB);
+                            printf("3) cost: %d = postionA: %d +(tmpB ->stackB_size: %d - postionB + 1: %d\n)",cost, positionA,tmpB ->stackB_size, positionB + 1);
 						}  //I  might need to add 1, 1 missing move
                 }
                 else
                 {
                     if (positionB <= (tmpB->stackB_size + 1) / 2)
                     { // should I add one or  not
+                        if (stackB ->stackB_size == 2)
+                                positionB--;
                         cost = (tmpA ->stackA_size + 2) - positionA + positionB;
-                        // printf("4) cost: %d = (tmpA -> stackA_size + 2: %d) - positionA: %d + positionB: %d\n", cost, tmpA -> stackA_size +2, positionA, positionB);
+                        printf("4) cost: %d = (tmpA -> stackA_size + 2: %d) - positionA: %d + positionB: %d\n", cost, tmpA -> stackA_size +2, positionA, positionB);
                     }
                     else
                         {
                             if ((tmpA ->stackA_size + 2) - positionA > tmpB ->stackB_size - positionB)
                             {
                                 cost = (tmpA -> stackA_size + 2) - positionA;
-                                //  printf("5) cost: %d = (tmpA -> stackA_size + 2: %d) - positionA: %d", cost, tmpA -> stackA_size + 2, positionA);
+                                 printf("5) cost: %d = (tmpA -> stackA_size + 2: %d) - positionA: %d\n", cost, tmpA -> stackA_size + 2, positionA);
                             } 
                             else
                             {
-                                cost = (tmpB ->stackB_size - positionB) + 1;
-                                //  printf("6) cost: %d = (tmpB -> stackA_size: %d - positionB +1: %d\n)", cost, tmpB -> stackB_size, positionB + 1);
+                                cost = (tmpB ->stackB_size - positionB);
+                                 printf("6) cost: %d = (tmpB -> stackA_size: %d - positionB +1: %d\n)", cost, tmpB -> stackB_size, positionB + 1);
                             }
                         }
                 }                 
@@ -418,7 +422,7 @@ int main(int ac, char **av)
     push(&stacka, &stackb);
     // mixer(stacka, stackb);
     // makemoves(stacka, stackb);
-    target(stacka, stackb);
+    // target(stacka, stackb);
     
     // largestnsmallest(stacka);
 	// firstnlast(stacka);
