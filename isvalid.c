@@ -175,18 +175,18 @@ static int	ft_strchr(const char *s, int c)
 	return 0;
 }
 
-// static int is_integer(char *str)
-// {
-// 	 if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))
-// 	 			return (0);
-// 		return (1);
-// }
+static int is_integer(char *str)
+{
+	 if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))
+	 			return (0);
+		return (1);
+}
 static int isnot_term(char *str)
 {
-	int i = 0;                //0                                    1                                2                                                 3                                              4
- 	while (str[i])          // i = '-'         i + 1 = '1'         i = 1      i + 1 = ' '             i = ' '              i + 1 = '-'                  i = '-'              i + 1 = 2                 i = 2
+	int i = 0;
+	while (str[i])
 	{
-		if ((str[i] >= '0' && str[i] <= '9') && (str[i + 1] == '+' || str[i + 1] == '-'))
+		while (str[i] >= '0' && str[i] <= '9' && (str[i + 1] == '+' || str[i + 1] == '-'))
 			return 0;
 		i++;
 	}
@@ -198,8 +198,7 @@ static int t_defence(char *str)
 	int i = 0;
 	int flag = 0;
 
-
-	if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))   // it only checks number - '0' 
+	if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))
 		return 0;
 	while(str[i] == ' ')
 		i++;	
@@ -210,14 +209,11 @@ static int t_defence(char *str)
 			flag = 1;
 		 else if (flag && str[i] == ' ')
 			flag = 1;
-		else
-		{
-
+		else 
 			return 0;
-		}
 		i++;
 	}
-	return (flag);
+		return (flag);
 }
  Node* createNode(int value)
 {
@@ -230,15 +226,15 @@ static int t_defence(char *str)
 	newnode -> next = NULL;
 	return newnode;
 }
-// void printlist(Node* list)
-// {
-// 	Node *tmp = list;
-// 	while (tmp != NULL)
-// 	{
-// 		printf("data: %d\n max: %d\n min: %d\n ", tmp -> data, tmp ->bmax, tmp -> bmin);
-// 		tmp = tmp -> next;
-// 	}
-// }
+void printlist(Node* list)
+{
+	Node *tmp = list;
+	while (tmp != NULL)
+	{
+		printf("%d\n", tmp -> data);
+		tmp = tmp -> next;
+	}
+}
 static void freelist(Node* list)
 {
 	Node *tmp = list;
