@@ -1,61 +1,3 @@
-// #include "list.h"
-// int target(Node *stackA, Node *stackB)
-// {
-//     Node *tmpA = stackA;
-//     Node *tmpB = stackB;
-//     int  cheapest_cost;
-//     int  target;
-//     int positionA;
-//     int positionB;
-//     int stackA_size;
-//     int stackB_size;
-
-//     positionA = 0;
-//     cheapest_cost = INT_MAX;
-//     int cost;
-//     while (tmpA != NULL)
-//     {
-//         positionA++;
-//         positionB = 0;
-//         tmpB = stackB;
-//         while (tmpB != NULL)
-//         {
-//             if ((tmpA -> data < tmpB -> data    // inbetween.
-//                 && tmpA -> data > tmpB->next->data) // beautiful segfault
-//                 || (tmpB -> data == bmax && (tmpA -> data > bmax || tmpA -> data < bmin)) 
-//                 ||  (tmpA -> data > tmpB -> first
-//                 && tmpA -> data < tmpB-> last))
-//             {
-//                 if (positionA <= (stackA_size + 1) / 2)
-//                 {
-//                     if (positionB <= (stackB_size + 1) / 2)
-//                         cost = positionA + positionB; //I  might need to subtract 1 move
-//                     else
-//                         cost = positionA + stackB_size - positionB; //I  might need to add 1, 1 missing move
-//                 }
-//                 else
-//                 {
-//                     if (positionB <= (stackB_size + 1) / 2) // should I add one or  not
-//                         cost = (stackA_size + 2) - positionA + positionB;
-//                     else
-//                         cost = (stackA_size + 2) - positionA + (stackB_size) - positionB;
-//                 }                 
-//                 if (cost < cheapest_cost)
-//                 {
-//                     cheapest_cost = cost;
-//                     target = tmpA -> data;
-//                 }
-//                 break ;
-//             }
-//             positionB++;
-//             tmpB = tmpB -> next;            
-//         }
-//         tmpA = tmpA -> next;
-//     }
-//         // return (target);
-
-//         return (); //modify it
-// }
 
 #include "list.h"
 #include <stdio.h>
@@ -159,16 +101,8 @@ void target(Node *stackA, Node *stackB)
 	int positionA = 0;
 	int positionB = 1;
 	int cost = 0;
-	// int stackA_size = 0;
-	// int stackB_size = 0;
-	
-	// stackA_size = stackA -> stackA_size;
-	// stackB_size = stackB -> stackB_size;
-	// cheapest_cost = INT_MAX;
 
 	listsize(stackA, stackB);
-	// printf("%d\n", stackA -> stackA_size);
-	// printf("%d\n", stackB -> stackB_size);
 	largestnsmallest(stackB);
 	firstnlast(stackB);
 
@@ -177,22 +111,13 @@ void target(Node *stackA, Node *stackB)
 		positionA++;
 		 
 		tmpB = stackB;
+		positionB = 1;
 		while (tmpB != NULL)
 		{
-			// if ((tmpB->next != NULL)
-			// && (tmpA -> data < tmpB -> data) && (tmpA -> data > tmpB->next->data)
-			// || (tmpB -> data == tmpB -> bmax) 
-			// && (tmpA -> data > tmpB -> bmax) || (tmpA -> data < tmpB -> bmin)
-			// ||  (tmpA -> data > tmpB -> first && tmpA -> data < tmpB-> last))
-			if ((tmpB->next != NULL
-			&& (tmpA->data < tmpB->data && tmpA->data > tmpB->next->data))
-			|| (tmpB->data == tmpB->bmax) && (tmpA->data > tmpB->bmax
-			|| tmpA->data < tmpB->bmin) 
+			if ((tmpB->next != NULL && (tmpA->data < tmpB->data && tmpA->data > tmpB->next->data))
+			|| (tmpB->data == tmpB->bmax && (tmpA->data > tmpB->bmax || tmpA->data < tmpB->bmin)) 
 			|| (tmpA->data > tmpB->first && tmpA->data < tmpB->last))
 			{
-				//printf("%d\n", positionB);
-				//printf("ay xay\n");
-				//exit(0);
 				if (positionA <= (tmpA ->stackA_size + 1) / 2)
 				{
 					if (positionB <= (tmpB ->stackB_size + 1) / 2)
@@ -213,7 +138,7 @@ void target(Node *stackA, Node *stackB)
 								cost = positionB;
 								//  printf("2) cost: %d = positionB: %d + 1\n",cost, positionB);
 							}
-						} //  might need to subtract 1 mov
+						}
 					else
 						{
 							if (positionB == 2 && stackB ->stackB_size == 2)
@@ -223,12 +148,12 @@ void target(Node *stackA, Node *stackB)
 							cost = positionA + (tmpB ->stackB_size - positionB);
 							// printf("3) cost: %d = postionA: %d +(tmpB ->stackB_size: %d - postionB: %d\n)",cost, positionA,tmpB ->stackB_size, positionB);
 							}
-						}  //I  might need to add 1, 1 missing move
+						} 
 				}
 				else
 				{
 					if (positionB <= (tmpB->stackB_size + 1) / 2)
-					{ // should I add one or  not
+					{ 
 						if (stackB ->stackB_size == 2)
 								positionB--;
 						cost = (tmpA ->stackA_size + 2) - positionA + positionB;
@@ -257,11 +182,7 @@ void target(Node *stackA, Node *stackB)
 
 					tmpA ->positionA = positionA;
 					tmpB -> positionB = positionB;
-					//printf("I entered: %d\n", positionB);
-					//exit(0);
-					//printf("%d\n", positionB);
-					//printf("ay xay\n");
-					//exit(0);
+
 					printf("first: %d\n", tmpB ->first);
 					printf("last: %d\n", tmpB ->last);
 			
@@ -275,149 +196,12 @@ void target(Node *stackA, Node *stackB)
 		}
 		tmpA = tmpA -> next;
 	}
-	// printf("%d",cheapest_cost);
-		// tmpA -> stackA_size = stackA_size;
-		// tmpB -> stackB_size = stackB_size; 
 		printf("cheapest cost: %d\n",cheapest_cost);
 }
 
-// void makemoves(Node *stackA, Node *stackB)
-// {
-	
-//     Node *tmp = stackA;
-//     target(stackA, stackB);
-//     printf("positiona: %d, postionb: %d\n", stackA ->positionA, stackB ->positionB);
-//     int move_counta = tmp -> positionA - 1;
-//     int move_countb = tmp -> positionB;
-//     int move_count = move_counta - move_countb;
-
-//     int move_rcounta = (tmp -> stackA_size + 1) - tmp -> positionA;
-//     int move_rcountb = tmp -> stackB_size - move_countb; 
-//     int move_rcount = move_rcounta - move_rcountb;
-
-	
-//         if (tmp ->positionA <= (tmp ->stackA_size + 1) / 2)
-//         {
-//             if (tmp ->positionB <= (tmp -> stackB_size + 1) / 2)
-//                 {
-//                     if (tmp ->positionA >= tmp -> positionB)
-//                     { 
-//                         while (move_countb > 0)
-//                         {
-//                             double_rotate(stackA, stackB);
-//                             printf("rr\n");
-//                             move_countb--;
-//                         }
-//                         while (move_count > 0)
-//                         {
-//                             rotate(stackA);
-//                             printf("ra\n");
-//                             move_count--;
-//                         }
-//                         push(&stackA, &stackB);
-//                         printf("pb\n"); 
-//                     }
-//                     else
-//                     {
-//                         while (move_counta > 0)
-//                         {
-//                             double_rotate(stackA, stackB);
-//                             printf("rr\n");
-//                             move_counta--;
-//                         }
-//                         while (move_count > 0)
-//                         {
-//                             rotate(stackB);
-//                             printf("rb\n");
-//                             move_count--;
-//                         }
-//                         push(&stackA, &stackB);
-//                         printf("pb\n");
-//                     }
-//                 }
-//             else
-//             {
-//                 while(move_counta > 0)
-//                 {
-//                     rotate(stackA);
-//                     printf("ra\n");
-//                     move_counta--;
-//                 }
-//                 while (move_rcountb > 0)
-//                 {
-//                     reverse_rotate(&stackB);
-//                     printf("rrb\n");
-//                     move_rcountb--;
-//                 }
-//                 push(&stackA, &stackB);
-//                 printf("pb\n");
-//             }    //I  might need to add 1, 1 missing move
-//         }
-//         else
-//         {
-//             if (tmp ->positionB <= (tmp -> stackB_size + 1) / 2) // should I add one or  not
-//             { // cost = (stackA_size + 2) - positionA + positionB;
-//                 while (move_countb > 0)
-//                 {
-//                     rotate(stackB);
-//                     printf("rb\n");
-//                     move_countb--;
-//                 }
-//                 while (move_rcounta > 0)
-//                 {
-//                     reverse_rotate(&stackA);
-//                     printf("rra\n");
-//                     move_rcounta--;
-//                 }
-//                 push(&stackA, &stackB);
-//                 printf("pb\n");
-//             }
-//             else
-//                 {
-//                     if ((tmp ->stackA_size + 2) - tmp -> positionA >= tmp ->stackB_size - tmp -> positionB)
-//                     {  
-//                         while (move_rcountb > 0)
-//                         {
-//                             double_reverse_rotate(&stackA, &stackB);
-//                             printf("rrr\n");
-//                             move_rcountb--;
-//                         } 
-//                         while (move_rcount > 0)
-//                         {
-//                             reverse_rotate(&stackA);
-//                             printf("rra\n");
-//                             move_rcount--;
-//                         }
-//                         push(&stackA, &stackB);
-//                         printf("pa\n");
-//                     } 
-//                     else
-//                     {
-//                     while (move_rcounta > 0)
-//                         {
-//                             double_reverse_rotate(&stackA, &stackB);
-//                             printf("rrr\n");
-//                             move_rcounta--;
-//                         } 
-//                         while (move_rcount > 0)
-//                         {
-//                             reverse_rotate(&stackB);
-//                             printf("rr\n");
-//                             move_rcount--;
-//                         }
-//                         push(&stackA, &stackB);
-//                         printf("pa\n");
-//                     }
-//                 }
-//         }               
-// }
-
 void makemoves(Node **stackA, Node **stackB)
 {
-	// Node *tmp = stackA;
-	// target(stackA, stackB);
-	// printf("positiona: %d, postionb: %d\n", stackA -> positionA, stackB -> positionB);
-
+	
 	int move_counta = (*stackA) -> positionA - 1;
 	int move_countb = (*stackB) -> positionB;
 
@@ -461,7 +245,7 @@ void makemoves(Node **stackA, Node **stackB)
 					printf("rr\n");
 					move_counta--;
 				}
-				while (((*stackA) -> positionA != 1 || (*stackB) -> positionB != 1) && move_count > 0)
+				while (((*stackB) -> positionB != 1) && move_count > 0)
 				{
 					rotate(*stackB);
 					printf("rb\n");
@@ -485,7 +269,7 @@ void makemoves(Node **stackA, Node **stackB)
 				printf("rrb\n");
 				move_rcountb--;
 			}
-		}    //I  might need to add 1, 1 missing move
+		}   
 		else if ((*stackB) -> positionB <= ((*stackB) -> stackB_size + 1) / 2 
 		&& (*stackA) -> positionA > ((*stackA) ->stackA_size + 1) / 2)
 		{
@@ -536,37 +320,8 @@ void makemoves(Node **stackA, Node **stackB)
 				}
 			}
 		}
-
 		push(stackA, stackB);
-		printf("push\n");
-
-
-
-
-
-
-
-
-	//     else
-	//     {
-	//         while (stackA -> positionA > 1 && move_rcounta > 0)
-	//         {
-	//             double_reverse_rotate(&stackA, &stackB);
-	//             printf("rrr\n");
-	//             move_rcounta--;
-	//         }       
-	//         while (stackA -> positionA > 1 && move_rcount > 0)
-	//         {
-	//             reverse_rotate(&stackB);
-	//             printf("rr\n");
-	//             move_rcount--;
-	//         }
-	//     }
-	
-		// push(&stackA, &stackB);
-		// printf("push me: pb\n");
-		// printlist(stackA);
-	//     break;    
+		printf("push\n\n");  
 }
 
 void   rotate_pushback(Node *stacka , Node *stackb)
@@ -599,13 +354,7 @@ void   rotate_pushback(Node *stacka , Node *stackb)
 
 void mixer(Node **stacka, Node **stackb)
 {
-	// int size = stacka -> stackA_size;
 
-	// while(size)
-	// {
-	//     target(stacka, stackb);
-	//     size--;
-	// }
 	while (*stacka != NULL)
 	{
 		target(*stacka, *stackb);
@@ -616,16 +365,8 @@ void mixer(Node **stacka, Node **stackb)
 		printf("size A: %d\n",(*stacka) ->stackA_size);
 		printf("size B:%d\n",(*stackb) ->stackB_size); 
 		makemoves(stacka, stackb);
-		// push(stacka, stackb);
-		// printf("hola\n");
 	}
-	// while (stackb != NULL)
-	// {
-	//     rotate_pushback;
-	// }
-	// push(stacka, stackb);
 }
-
 int main(int ac, char **av)
 {
 	Node *stacka = is_valid(ac, av);
@@ -634,29 +375,18 @@ int main(int ac, char **av)
 	push(&stacka, &stackb); 
 	// printf("pb\n");
 	push(&stacka, &stackb);
-	//rotate(stackb);
-	//push(&stacka, &stackb);
-	// printf("pb\n");
-
 	//if (stackb -> data > stackb -> next ->data)
 	//{   
 	//	swap(stackb);
 	//	printf("stack b got swapped\n");
 	//}
-
-	// push(&stacka, &stackb);
-	// printf("pb");
-	// push(&stacka, &stackb);
-	// push(&stacka, &stackb);
-	// push(&stacka, &stackb);
-	// push(&stacka, &stackb);
-	// push(&stacka, &stackb);
 	mixer(&stacka, &stackb);
-
-
-	// target(stacka, stackb);
-	// makemoves(stacka, stackb);
 	printlist(stackb);
+}
+
+
+// Notes:fix formulas.
+// add cost based rrr  
 	// is_valid(ac, av);
 	// printlist(stacka);
 	// largestnsmallest(stacka);
@@ -665,10 +395,6 @@ int main(int ac, char **av)
 	// mixer(stacka, stackb);
 	
 	// printf("%d", stackb -> data);
-}
-
-// Notes:fix formulas.
-// add cost based rrr  
 // double check formulas
 // do a function and update bmin & bmax 
 // do a function and update bfirst and blast 
