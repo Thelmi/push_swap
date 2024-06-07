@@ -124,7 +124,7 @@ void target(Node *stackA, Node *stackB)
 						{
 							if (positionA == 1 && positionB == 1)
 							{
-							cost = 1;
+								cost = 1;
 							    //printf("0)cost: %d = positionA %d\n",cost, positionA);
 							}
 							else if (positionA > positionB)
@@ -142,7 +142,10 @@ void target(Node *stackA, Node *stackB)
 					else
 						{
 							if (positionB == 2 && stackB ->stackB_size == 2)
+							{
 									cost = positionA + ((tmpB ->stackB_size + 1) - positionB);
+									//printf("11)okayokay");
+							}
 							else
 							{
 							cost = positionA + (tmpB ->stackB_size - positionB);
@@ -154,8 +157,8 @@ void target(Node *stackA, Node *stackB)
 				{
 					if (positionB <= (tmpB->stackB_size + 1) / 2)
 					{ 
-						if (stackB ->stackB_size == 2)
-								positionB--;
+						//if (stackB ->stackB_size == 2)
+						//		positionB--;
 						cost = (tmpA ->stackA_size + 2) - positionA + positionB;
 						// printf("4) cost: %d = (tmpA -> stackA_size + 2: %d) - positionA: %d + positionB: %d\n", cost, tmpA -> stackA_size +2, positionA, positionB);
 					}
@@ -218,7 +221,8 @@ void makemoves(Node **stackA, Node **stackB)
 		move_rcount = move_rcounta - move_rcountb;
 	else 
 		move_rcount = move_rcountb - move_rcounta;
-
+		//printf("real sizeb: d\n");
+		printf("%d <= %d\n", (*stackB) -> positionB,((*stackB) -> stackB_size + 1)/ 2);
 		if ((*stackA) -> positionA <= (*stackA) ->stackA_size + 1 / 2
 		&& (*stackB) -> positionB <= (*stackB) -> stackB_size + 1 / 2)
 		{
@@ -226,13 +230,13 @@ void makemoves(Node **stackA, Node **stackB)
 			{ 
 				while (move_countb > 0)
 				{
-					double_rotate(*stackA, *stackB);
+					double_rotate(stackA, stackB);
 					printf("rr\n");
 					move_countb--;
 				}
 				while (move_count > 0)
 				{
-					rotate(*stackA);
+					rotate(stackA);
 					printf("ra\n");
 					move_count--;
 				}
@@ -241,15 +245,15 @@ void makemoves(Node **stackA, Node **stackB)
 			{
 				while ((*stackA) -> positionA > 1 && move_counta > 0)
 				{
-					double_rotate(*stackA, *stackB);
+					double_rotate(stackA, stackB);
 					printf("rr\n");
 					move_counta--;
 				}
 				while (((*stackB) -> positionB != 1) && move_count > 0)
 				{
-					rotate(*stackB);
+					rotate(stackB);
 					printf("rb\n");
-					// printf("simply\n");
+					printf("simply\n");
 					move_count--;
 				}     
 			}
@@ -259,7 +263,7 @@ void makemoves(Node **stackA, Node **stackB)
 		{
 			while((*stackA) -> positionA > 1 && move_counta > 0)
 			{
-				rotate(*stackA);
+				rotate(stackA);
 				printf("ra\n");
 				move_counta--;
 			}
@@ -275,7 +279,7 @@ void makemoves(Node **stackA, Node **stackB)
 		{
 			while (move_countb > 0)
 			{
-				rotate(*stackB);
+				rotate(stackB);
 				printf("rb\n");
 				move_countb--;
 			}
@@ -324,32 +328,32 @@ void makemoves(Node **stackA, Node **stackB)
 		printf("push\n\n");  
 }
 
-void   rotate_pushback(Node *stacka , Node *stackb)
-{
-	int position = 1;
-	Node *tmp = stackb;
+//void   rotate_pushback(Node *stacka , Node *stackb)
+//{
+//	int position = 1;
+//	Node *tmp = stackb;
 
-	while (tmp != NULL)
-	{
-		if (tmp -> data == tmp ->bmax)
-			break;
-		position++;
-		tmp = tmp ->next;
-	}
-	tmp = stackb;
-	if (position >= tmp ->stackA_size + 1 / 2)
-	{
-		while (tmp -> data == tmp ->bmax)
-			rotate(stackb);
-	}
-	else
-	{
-		while (tmp -> data == tmp ->bmax)
-			reverse_rotate(&stackb);
-		while (tmp != NULL)
-			push(&stackb, &stacka);
-	}
-} 
+//	while (tmp != NULL)
+//	{
+//		if (tmp -> data == tmp ->bmax)
+//			break;
+//		position++;
+//		tmp = tmp ->next;
+//	}
+//	tmp = stackb;
+//	if (position >= tmp ->stackA_size + 1 / 2)
+//	{
+//		while (tmp -> data == tmp ->bmax)
+//			rotate(&stackb);
+//	}
+//	else
+//	{
+//		while (tmp -> data == tmp ->bmax)
+//			reverse_rotate(&stackb);
+//		while (tmp != NULL)
+//			push(&stackb, &stacka);
+//	}
+//} 
 
 
 void mixer(Node **stacka, Node **stackb)
@@ -365,6 +369,7 @@ void mixer(Node **stacka, Node **stackb)
 		printf("size A: %d\n",(*stacka) ->stackA_size);
 		printf("size B:%d\n",(*stackb) ->stackB_size); 
 		makemoves(stacka, stackb);
+		// 
 	}
 }
 int main(int ac, char **av)
@@ -373,8 +378,8 @@ int main(int ac, char **av)
 	Node *stackb = NULL;
 
 	push(&stacka, &stackb); 
-	// printf("pb\n");
 	push(&stacka, &stackb);
+
 	//if (stackb -> data > stackb -> next ->data)
 	//{   
 	//	swap(stackb);

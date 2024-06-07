@@ -58,19 +58,21 @@ void push(Node **listA, Node **listB)
 }
 
 // rotate
-void rotate(Node *list)
+void rotate(Node **list)
 {
-    Node *tmp = list;
-    // Node* last = lastnode(list);
-    while(tmp -> next != NULL)
-    {
-        swap(list);
-        tmp = tmp -> next;
-    }
-        // printf("%s\n", move);
+    Node *first = *list;
+	Node *last = lastnode(*list);
+	*list = first -> next;
+	first -> next = NULL;
+	last -> next =  first;
 }
+//void rotate(Node *list)
+//{
+//	Node *tmp = list;
 
-void double_rotate(Node *listA, Node *listB)
+//}
+
+void double_rotate(Node **listA, Node **listB)
 {
     rotate(listA);
     rotate(listB);

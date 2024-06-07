@@ -199,8 +199,8 @@ static int t_defence(char *str)
 	int flag = 0;
 
 
-	if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))   // it only checks number - '0' 
-		return 0;
+	//if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))   // it only checks number - '0' 
+	//	return 0;
 	while(str[i] == ' ')
 		i++;	
 	while (str[i])
