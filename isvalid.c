@@ -175,12 +175,12 @@ static int	ft_strchr(const char *s, int c)
 	return 0;
 }
 
-// static int is_integer(char *str)
-// {
-// 	 if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))
-// 	 			return (0);
-// 		return (1);
-// }
+static int is_integer(char *str)
+{
+	 if (ft_strlen(str) > 2 && (ft_atoi(str) == 0 || ft_atoi(str) == -1))
+	 			return (0);
+		return (1);
+}
 static int isnot_term(char *str)
 {
 	int i = 0;                //0                                    1                                2                                                 3                                              4
@@ -344,6 +344,8 @@ Node *is_valid(int ac, char **av)
 	Node *nextnode;
 
 	int j = 0;
+	if (ac == 1)
+		exit(1);
 	while(i < ac)
 	{
 		if (t_defence(av[i]) && isnot_term(av[i]))
