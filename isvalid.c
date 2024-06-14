@@ -339,12 +339,13 @@ Node *is_valid(int ac, char **av)
 {
 	int i = 1;
 	char **splitted;
+	int checked = 1;
 	Node *head = NULL;
 	Node *tmp;
 	Node *nextnode;
 
 	int j = 0;
-	if (ac == 1)
+	if (ac <= 1)
 		exit(1);
 	while(i < ac)
 	{
@@ -353,6 +354,20 @@ Node *is_valid(int ac, char **av)
 			if (ft_strchr(av[i], ' '))
 			{
 				splitted = ft_split(av[i], ' ');
+				if (checked)
+				{
+				while (splitted[j] && checked)
+				{
+					if (!is_integer(splitted[j]))
+					{
+						printf("error");
+						exit(0);
+					}
+					j++;
+				}
+					checked = 0;
+				}
+				j = 0;
 				if(!head)
 				{
 			    	head = createNode(ft_atoi(splitted[0]));

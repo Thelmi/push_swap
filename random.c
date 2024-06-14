@@ -9,7 +9,7 @@ void printlist(Node* list)
 	{
 		// printf("data: %d\n max: %d\n min: %d\n ", tmp -> data, tmp ->bmax, tmp -> bmin);
 		// printf("data: %d\n first: %d\n last: %d\n",tmp ->data ,tmp ->first, tmp ->last);
-		// printf("data: %d\n", tmp ->data);
+		 printf("%d\n", tmp ->data);
 		tmp = tmp -> next;
 	}
 }
@@ -481,6 +481,44 @@ void   rotate_pushback(Node **stacka , Node **stackb)
     //     push(stackb, stacka);
 } 
  
+void sort_three(Node **stackA)
+{
+	if ((*stackA) ->data > (*stackA) -> next -> data
+	&& (*stackA) -> next -> data > (*stackA) -> next -> next -> data)
+	{
+		rotate(stackA);
+		printf("ra\n");
+		swap(*stackA);
+		printf("sa\n");
+	}
+	else if ((*stackA) -> data > (*stackA) -> next -> data
+	&& (*stackA) -> next -> data < (*stackA) -> next -> next -> data
+	&& (*stackA) -> data > (*stackA) -> next -> next -> data)
+	{
+		rotate(stackA);
+		printf("ra\n");
+	}
+	else if ((*stackA) ->data < (*stackA) -> next -> data
+	&& (*stackA) -> next -> data > (*stackA) -> next -> next -> data
+	&& (*stackA) -> data > (*stackA)-> next -> next -> data)
+	{
+		reverse_rotate(stackA);
+		printf("rr\n");
+	}
+	else if ((*stackA) ->data > (*stackA) -> next -> data
+	&& (*stackA) -> next -> data < (*stackA) -> next -> next -> data)
+	{
+		swap(*stackA);
+		printf("sa\n");
+	}
+	else 
+	{
+		swap(*stackA);
+		printf("sa\n");
+		rotate(stackA);
+		printf("ra\n");
+	}
+}
 
 
 // void check_if_sorted(Node **stackA, Node **stackB) //rotate to make max at the top, then check if sorted
@@ -617,12 +655,118 @@ void mixer(Node **stacka, Node **stackb)
     rotate_pushback(stacka, stackb);
 	
 }
-
+void smallest_position(Node *stacka)
+{
+	Node *tmp = stacka;
+	int count = 1;
+	while (tmp != NULL)
+	{
+		if (stacka -> bmin ==  tmp -> data)
+			{
+				stacka -> positionA = count;
+				break;
+			}
+		count++;
+		tmp = tmp -> next;
+	}
+}
+void sort_five(Node **stacka, Node **stackb)
+{
+	largestnsmallest(*stacka);
+	smallest_position(*stacka);
+	listsize(*stacka, *stackb);
+	
+	int positionA = 0;
+	//printf("out :%d\n", (*stacka) -> positionA);
+	if ((*stacka) -> positionA <= ((*stacka) -> stackA_size + 1) / 2)
+	{
+		positionA = (*stacka) -> positionA;
+		while ((positionA - 1) > 0)
+		{
+			//printf("in : %d\n", (*stacka) -> positionA);
+			rotate(stacka);
+			printf("ra\n");
+			
+			//(*stacka) -> positionA--;
+			positionA--;
+		}
+		push(stacka, stackb);
+		printf("pb\n");
+	}
+	else 
+	{
+		positionA = (*stacka) -> stackA_size + 1 - (*stacka) -> positionA;
+		while (positionA > 0)
+		{
+			reverse_rotate(stacka);
+			printf("rra\n");
+			positionA--;
+		}
+		push(stacka, stackb);
+		printf("pb\n");
+	}
+}
+	int isascending(Node *list)
+	{
+		Node *tmp = list;
+		while (tmp -> next != NULL)
+		{
+			if (tmp -> data > tmp -> next-> data)
+				return 0;
+			tmp = tmp -> next;
+		}
+		return 1;
+	}
 int main(int ac, char **av)
 {
 	Node *stacka = is_valid(ac, av);
 	Node *stackb = NULL;
 
+	if (isascending(stacka))
+		return (0);
+	listsize(stacka, stackb);
+	if (stacka -> stackA_size == 2)
+		{
+			swap(stacka);
+			printf("sa\n");
+			printlist(stacka);
+			return 0;
+		}
+	if (stacka -> stackA_size == 3)
+	{
+		sort_three(&stacka);
+		printlist(stacka);
+		return 0;
+	}
+	else if (stacka -> stackA_size == 4)
+	{
+		sort_five(&stacka, &stackb);
+		if (!isascending(stacka))
+			sort_three(&stacka);
+		push(&stackb, &stacka);
+		printf("pa\n");
+		printlist(stacka);
+		return 0;
+	}
+	else if (stacka -> stackA_size == 5)
+	{
+		
+		sort_five(&stacka, &stackb);
+		sort_five(&stacka, &stackb);
+		if (stackb -> data < stackb -> next -> data)
+		{
+			swap(stackb);
+			printf("sa\n");
+		}
+		if (!isascending(stacka))
+			sort_three(&stacka);
+		push(&stackb, &stacka);
+		push(&stackb, &stacka);
+		printf("pa\n");
+		printf("pa\n");
+		printlist(stacka);
+		return 0;
+	}
 	push(&stacka, &stackb); 
 	printf("pa\n");
 	push(&stacka, &stackb);
@@ -674,13 +818,12 @@ int main(int ac, char **av)
 	// mixer(stacka, stackb);
 	
 	// printf("%d", stackb -> data);
-// double check formulas
-// do a function and update bmin & bmax 
-// do a function and update bfirst and blast 
-// fix segfault.
-// apply the moves based on the smallest cost and print moves 
-// check number of moves 
-// check leaks
-// work on the bonus
-// ask friends 
+
+
+// make file
+// total normination 
+// memory managment
+// bonus
+
+
 
